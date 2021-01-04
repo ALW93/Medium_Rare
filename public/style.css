@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+#circles {
+  border-radius: 50%;
+}
+
+body {
+  font-family: "Noto Sans JP", "Courier New", Courier, monospace;
+}
+
+a {
+  margin: 12px;
+  color: rgb(87, 87, 87);
+}
+
+h4,
+h5 {
+  margin: 12px;
+  margin-bottom: -10px;
+  cursor: pointer;
+}
+
+.suggestedUserClass {
+  margin: 12px;
+  margin-bottom: -10px;
+  text-decoration: none;
+  color: black;
+  font-size: small;
+}
+
+h2,
+h3 {
+  font-family: sans-serif;
+  margin: 12px;
+}
+
+img {
+  border-radius: 2px;
+  opacity: 0.9;
+}
+
+.pageBreak {
+  width: 100%;
+  border-top: 1px solid rgb(206, 206, 206);
+}
+
+.coming-soon {
+  width: 500px;
+  text-align: center;
+  margin: auto;
+}
+
+.followButton {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border: 1px solid rgb(89, 164, 177);
+  border-radius: 4px;
+  color: rgb(89, 164, 177);
+  margin: 5px;
+}
+
+.followButton:active {
+  transform: translateY(2px);
+}
+
+.followButtonClicked {
+  background-color: rgb(89, 164, 177);
+  outline: none;
+  border: none;
+  border: 1px solid rgb(89, 164, 177);
+  border-radius: 4px;
+  color: white;
+  margin: 5px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgb(206, 206, 206);
+  outline: none;
+}
