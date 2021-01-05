@@ -263,9 +263,6 @@ const content = {
     button.setAttribute("id", id);
     button.classList.add("followButton");
     button.textContent = "Follow";
-    // button.addEventListener('click', (e) => content.following(e, id));
-    // button.classList.add('test');
-    // console.dir(button);
     return button;
   },
 

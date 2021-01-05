@@ -18,8 +18,12 @@ router.get("/create", (req, res) => {
   res.render("create-article");
 });
 
-router.get("/testpage", (req, res) => {
+router.get("/article", (req, res) => {
   res.render("article-view");
+});
+
+router.get("/testpage", (req, res) => {
+  res.render("test", { username: "Alycia" });
 });
 
 module.exports = router;

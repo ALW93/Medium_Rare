@@ -1,13 +1,4 @@
-document.getElementById("image_fetch").addEventListener("click", async (e) => {
-  const picture = document.createElement("img");
-  picture.setAttribute(
-    "src",
-    "https://source.unsplash.com/random/1200x650/?nature,red"
-  );
-  picture.classList.add("image__result");
-  document.getElementById("image_results").appendChild(picture);
-});
-
+// *** Creates new Quill Editor ***
 var quill = new Quill("#editor", {
   modules: {
     toolbar: [
@@ -16,7 +7,6 @@ var quill = new Quill("#editor", {
       [{ color: [] }, { background: [] }],
       [{ align: [] }],
       ["link", "image", "video"],
-
       ["clean"],
     ],
   },
@@ -24,6 +14,21 @@ var quill = new Quill("#editor", {
   theme: "snow",
 });
 
+// *** Fetches Image to Fill Cover Photo ***
+document.getElementById("image_fetch").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const search = document.getElementById("Cover__Search").value;
+  const request = `https://source.unsplash.com/random/1200x550/?${search}`;
+  const container = document.getElementById("article__background");
+  container.setAttribute("style", `background-image: url(${request})`);
+  container.setAttribute("value", request);
+});
+
+document
+  .getElementById("article__background")
+  .addEventListener("click", (e) => {
+    console.log("something", e.target.getAttribute("value"));
+  });
 document.getElementById("article__submit").addEventListener("click", (e) => {
   e.preventDefault();
   var delta = quill.getContents();
