@@ -14,6 +14,14 @@ var quill = new Quill("#editor", {
   theme: "snow",
 });
 
+quill.setContents([
+  { attributes: { bold: true }, insert: "dddddwadaw" },
+  { insert: "\n\n" },
+  { attributes: { bold: true }, insert: "dwdd" },
+  { attributes: { background: "#ff9900", bold: true }, insert: "dwww" },
+  { attributes: { header: 1 }, insert: "\n" },
+]);
+
 // *** Fetches Image to Fill Cover Photo ***
 document.getElementById("image_fetch").addEventListener("click", async (e) => {
   e.preventDefault();
@@ -26,13 +34,37 @@ document.getElementById("image_fetch").addEventListener("click", async (e) => {
 });
 
 // *** Submit Handler for Article Form Data ***
-document.getElementById("article__submit").addEventListener("click", (e) => {
-  e.preventDefault();
-  const title = document.getElementById("article__title").value;
-  const cover = document
-    .getElementById("article__background")
-    .getAttribute("value");
-  const body = quill.root.innerHTML;
-  const delta = quill.getContents();
-  console.log(title, cover, body, delta);
-});
+document
+  .getElementById("article__submit")
+  .addEventListener("click", async (e) => {
+    e.preventDefault();
+    const title = document.getElementById("article__title").value;
+    const cover = document
+      .getElementById("article__background")
+      .getAttribute("value");
+    const body = JSON.stringify(quill.root.innerHTML);
+    const delta = JSON.stringify(quill.getContents());
+
+    const newArticle = {
+      title: title,
+      userId: 1,
+      cover: cover,
+      body: body,
+      delta: delta,
+    };
+
+    const response = await fetch("/articles", {
+      method: "POST",
+      body: JSON.stringify(newArticle),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("MEDIUM_ACCESS_TOKEN")}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    }
+  });
