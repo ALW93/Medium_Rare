@@ -45,7 +45,7 @@ const articleNotFoundError = (articleId) => {
   return error;
 };
 
-// Retrieve JSON of Specific Article in Database
+// *** Fetch Specific Article via ID ***
 articleRouter.get(
   "/:id(\\d+)",
   asyncHandler(async (req, res, next) => {
@@ -83,19 +83,16 @@ articleRouter.get(
   })
 );
 
+// *** Post New Article to Database ***
 articleRouter.post(
   "/",
   requireAuth,
   articleValidations,
   asyncHandler(async (req, res) => {
-    const { body, title } = req.body;
-
-    const article = await Article.create({
-      title,
-      body,
-      userId: req.user.id,
-    });
-    res.json({ article });
+    const article = await Article.create(req.body);
+    if (article) {
+      return res.json({ article });
+    }
   })
 );
 

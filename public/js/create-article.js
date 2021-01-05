@@ -1,64 +1,68 @@
-const createArticle = document.querySelector(".create-article-form");
-if (createArticle) {
-createArticle.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const formData = new FormData(createArticle);
-  const title = formData.get("title");
-  const body = formData.get("body");
-  const claps = 0;
-  const userId = localStorage.getItem("MEDIUM_USER_ID");
-  const data = { title, body, claps, userId };
+// *** Creates new Quill Editor ***
+var quill = new Quill("#editor", {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ["link", "image", "video"],
+      ["clean"],
+    ],
+  },
+  placeholder: "Tell Your Story...",
+  theme: "snow",
+});
 
-  try {
-    const res = await fetch("/articles", {
+quill.setContents([
+  { attributes: { bold: true }, insert: "dddddwadaw" },
+  { insert: "\n\n" },
+  { attributes: { bold: true }, insert: "dwdd" },
+  { attributes: { background: "#ff9900", bold: true }, insert: "dwww" },
+  { attributes: { header: 1 }, insert: "\n" },
+]);
+
+// *** Fetches Image to Fill Cover Photo ***
+document.getElementById("image_fetch").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const search = document.getElementById("Cover__Search").value;
+  const request = `https://source.unsplash.com/random/1200x550/?${search}`;
+  const url = await fetch(request).then((data) => data.url);
+  const container = document.getElementById("article__background");
+  container.setAttribute("style", `background-image: url(${url})`);
+  container.setAttribute("value", url);
+});
+
+// *** Submit Handler for Article Form Data ***
+document
+  .getElementById("article__submit")
+  .addEventListener("click", async (e) => {
+    e.preventDefault();
+    const title = document.getElementById("article__title").value;
+    const cover = document
+      .getElementById("article__background")
+      .getAttribute("value");
+    const body = JSON.stringify(quill.root.innerHTML);
+    const delta = JSON.stringify(quill.getContents());
+
+    const newArticle = {
+      title: title,
+      userId: 1,
+      cover: cover,
+      body: body,
+      delta: delta,
+    };
+
+    const response = await fetch("/articles", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(newArticle),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("MEDIUM_ACCESS_TOKEN")}`,
       },
     });
-    if (!res.ok) {
-      throw res;
+
+    if (response.ok) {
+      window.location.href = "/";
     }
-
-    window.location.href = "/";
-  } catch (err) {
-    const res = await err.json();
-    console.log(res.errors);
-    const articleErrors = document.getElementById("storyText");
-    articleErrors.innerHTML = res.errors;
-  }
-});
-}
-// Attempting to Get Auto Expand Text Area
-const something = document.getElementById("storyTitle")
-if (something) {
-something.addEventListener(
-    "input",
-  function (event) {
-    if (event.target.tagName.toLowerCase() !== "textarea") {
-      console.log("hello");
-      return;
-    } else {
-      console.log("goodbye");
-      autoExpand(event.target);
-    }
-  },
-  false
-);
-}
-const autoExpand = (field) => {
-  field.style.height = "inherit";
-
-  var computed = window.getComputedStyle(field);
-
-  var height =
-    parseInt(computed.getPropertyValue("border-top-width"), 10) +
-    parseInt(computed.getPropertyValue("padding-top"), 10) +
-    field.scrollHeight +
-    parseInt(computed.getPropertyValue("padding-bottom"), 10) +
-    parseInt(computed.getPropertyValue("border-bottom-width"), 10);
-
-  field.style.height = height + "px";
-};
+  });

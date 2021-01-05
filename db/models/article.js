@@ -7,7 +7,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING(100),
       },
+      cover: {
+        type: DataTypes.TEXT,
+      },
       body: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      delta: {
         allowNull: false,
         type: DataTypes.TEXT,
       },
@@ -24,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
   );
   Article.associate = function (models) {
     Article.belongsTo(models.User, { foreignKey: "userId" }),
-    Article.hasMany(models.Comment, { foreignKey: "articleId", as: 'comments'})
+      Article.hasMany(models.Comment, {
+        foreignKey: "articleId",
+        as: "comments",
+      });
   };
   return Article;
 };
