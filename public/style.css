@@ -97,3 +97,9 @@ input {
   border-bottom: 1px solid rgb(206, 206, 206);
   outline: none;
 }
+
+#article__background {
+  min-width: 100vw;
+  height: 10vh;
+  border: 1px solid blue;
+}

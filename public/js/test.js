@@ -1,21 +1,22 @@
-// var QuillDeltaToHtmlConverter = require("quill-delta-to-html");
+document.getElementById("image_fetch").addEventListener("click", async (e) => {
+  const picture = document.createElement("img");
+  picture.setAttribute(
+    "src",
+    "https://source.unsplash.com/random/1200x650/?nature,red"
+  );
+  picture.classList.add("image__result");
+  document.getElementById("image_results").appendChild(picture);
+});
 
 var quill = new Quill("#editor", {
   modules: {
     toolbar: [
-      [{ font: [] }, { size: [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ["bold", "italic", "underline", "strike"],
       [{ color: [] }, { background: [] }],
-      [{ script: "super" }, { script: "sub" }],
-      [{ header: "1" }, { header: "2" }, "blockquote", "code-block"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["direction", { align: [] }],
-      ["link", "image", "video", "formula"],
+      [{ align: [] }],
+      ["link", "image", "video"],
+
       ["clean"],
     ],
   },
@@ -23,7 +24,9 @@ var quill = new Quill("#editor", {
   theme: "snow",
 });
 
-document.getElementById("editor").addEventListener("keyup", (e) => {
+document.getElementById("article__submit").addEventListener("click", (e) => {
+  e.preventDefault();
   var delta = quill.getContents();
+  console.log(delta);
   console.log(quill.root.innerHTML);
 });

@@ -1,10 +1,9 @@
-// This is Back End
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const path = require("path");
 const bearerToken = require("express-bearer-token");
-
 const followRouter = require("./routes/follows");
 const commentRouter = require("./routes/comments");
 const articleRouter = require("./routes/articles");
