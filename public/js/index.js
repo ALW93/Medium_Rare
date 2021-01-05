@@ -1,4 +1,4 @@
-var app = {
+const app = {
   init: () => {
     app.checkAuth();
     app.logOut();
@@ -33,6 +33,8 @@ var app = {
     app.limited();
   },
 
+  // *** Function for Setting Limited Features ***
+
   limited: () => {
     document.querySelectorAll(".limited").forEach((ele) => {
       ele.className = "unauthorized";
@@ -63,10 +65,7 @@ var app = {
     const profileLink = document.getElementById("profileReroute");
     profileLink.addEventListener("click", () => {
       const userId = localStorage.getItem("MEDIUM_USER_ID");
-      profileLink.setAttribute(
-        "href",
-        `/users/profile/${userId}`
-      );
+      profileLink.setAttribute("href", `/users/profile/${userId}`);
     });
   },
 };

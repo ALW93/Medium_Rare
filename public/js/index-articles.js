@@ -1,6 +1,4 @@
-// const db = require("../../db/models");
-// const { User } = db;
-var content = {
+const content = {
   init: async () => {
     await content.mainArticle();
     await content.mainSideArticles();
@@ -9,7 +7,6 @@ var content = {
     await content.suggestedUsers();
     content.following();
     content.linking();
-    //console.log(document.querySelectorAll(".followButton"));
   },
 
   suggestedUsers: async () => {
@@ -266,9 +263,6 @@ var content = {
     button.setAttribute("id", id);
     button.classList.add("followButton");
     button.textContent = "Follow";
-    // button.addEventListener('click', (e) => content.following(e, id));
-    // button.classList.add('test');
-    // console.dir(button);
     return button;
   },
 

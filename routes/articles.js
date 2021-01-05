@@ -2,14 +2,13 @@ const express = require("express");
 const articleRouter = express.Router();
 const { asyncHandler, handleValidationErrors } = require("../utils");
 const db = require("../db/models");
-const { Article, User, Comment } = db;
-const { check, validationResult } = require("express-validator");
+const { Article, Comment } = db;
+const { check } = require("express-validator");
 const { requireAuth } = require("../auth");
-const { router } = require("../app");
-const userRouter = require("./users");
 
 articleRouter.use(express.urlencoded());
 
+// *** GET: All Articles in Database ***
 articleRouter.get("/", async (req, res, next) => {
   const articles = await Article.findAll({ include: "User" });
   if (articles) {
@@ -17,6 +16,10 @@ articleRouter.get("/", async (req, res, next) => {
   } else {
     next();
   }
+});
+
+articleRouter.get("/test", (req, res) => {
+  res.render("test");
 });
 
 articleRouter.get("/new", (req, res) => {
