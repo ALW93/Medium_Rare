@@ -2,7 +2,7 @@ const express = require("express");
 const articleRouter = express.Router();
 const { asyncHandler, handleValidationErrors } = require("../utils");
 const db = require("../db/models");
-const { Article, Comment } = db;
+const { Article, Comment, User } = db;
 const { check } = require("express-validator");
 const { requireAuth } = require("../auth");
 
@@ -53,11 +53,14 @@ articleRouter.get(
     const article = await Article.findByPk(id, {
       include: { model: Comment, as: "comments", include: "User" },
     });
+    // const userId = article.userId;
+    // const user = await User.findbyPk(userId)
     if (article === null) {
       next(articleNotFoundError(article));
     } else {
       res.send({
         article,
+        // user,
         comments: article.comments,
       });
     }
@@ -72,11 +75,14 @@ articleRouter.get(
     const article = await Article.findByPk(id, {
       include: { model: Comment, as: "comments", include: "User" },
     });
+    const userId = article.userId;
+    const user = await User.findByPk(userId)
     if (article === null) {
       next(articleNotFoundError(article));
     } else {
       res.render("article-view", {
         article,
+        user,
         comments: article.comments,
       });
     }
