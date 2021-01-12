@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/articles", articleRouter);
-app.use(`/articles`, commentRouter);
+app.use("/comments", commentRouter);
 app.use("/users", followRouter);
 
 app.use(express.static(path.join(__dirname, "public")));
