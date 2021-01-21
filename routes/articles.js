@@ -122,6 +122,17 @@ articleRouter.put(
   })
 );
 
+articleRouter.put(
+  "/:id(\\d+)/clap",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const article = await Article.findByPk(req.params.id);
+    article.claps += 1;
+    await article.save();
+    res.json({ claps: article.claps });
+  })
+)
+
 articleRouter.delete(
   "/:id(\\d+)",
   requireAuth,

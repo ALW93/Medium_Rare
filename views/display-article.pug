@@ -3,7 +3,9 @@ extends layout.pug
 block content
   include includes/navigation
   h1= article.title
-  div Claps: #{article.claps}
+  div#articleClap Claps: #{article.claps}
+  button(type="button" class="btn btn-primary" id="add_clap") Clap
+
   div= article.body
     each comment in comments
       div
