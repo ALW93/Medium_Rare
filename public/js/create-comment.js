@@ -10,7 +10,7 @@ createComment.addEventListener("submit", async (e) => {
     const paramsId = window.location.href.split('/')[4]
 
     try {
-      const res = await fetch(`/articles/${paramsId}/comments`, {
+      const res = await fetch(`/comments/${paramsId}/`, {
           method: "POST",
           body: JSON.stringify({ message, userId }),
           headers: {

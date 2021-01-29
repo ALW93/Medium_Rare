@@ -10,12 +10,12 @@ const userRouter = require("./users");
 
 commentRouter.use(express.urlencoded());
 
-commentRouter.get("/:id(\\d+)/comments", (req, res) => {
+commentRouter.get("/:id(\\d+)/", (req, res) => {
   //console.log(req)
 
     res.render('create-comment');
 });
-commentRouter.post("/:id(\\d+)/comments", requireAuth, asyncHandler( async(req, res) => {
+commentRouter.post("/:id(\\d+)/", requireAuth, asyncHandler( async(req, res) => {
     const { message } = req.body;
 
     const comment = await Comment.create({
